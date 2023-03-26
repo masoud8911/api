@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from .models import Question, Answer
 from .serializer import QuestionSerializer, AnswerSerializer
 from rest_framework import status
+from .permissions import AllowOrReadonlyPermission
 
 
 class HomeView(APIView):
@@ -11,6 +12,8 @@ class HomeView(APIView):
 
 
 class QuestionView(APIView):
+    permission_classes = [AllowOrReadonlyPermission, ]
+
     def get(self, request):
         questions = Question.objects.all()
         srz_data = QuestionSerializer(instance=questions, many=True)
@@ -25,6 +28,7 @@ class QuestionView(APIView):
 
     def put(self, request, pk):
         question = Question.objects.get(pk=pk)
+        self.check_object_permissions(request, question)
         srz_data = QuestionSerializer(instance=question, data=request.data, partial=True)
         if srz_data.is_valid():
             srz_data.save()
@@ -33,5 +37,6 @@ class QuestionView(APIView):
 
     def delete(self, request, pk):
         question = Question.objects.get(pk=pk)
+        self.check_object_permissions(request, question)
         question.delete()
         return Response({'message': 'Success Deleted'})
