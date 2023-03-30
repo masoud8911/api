@@ -12,7 +12,7 @@ class UserViewSet(viewsets.ViewSet):
 
     def list(self, request):
         srz_data = UserSerializer(instance=self.queryset, many=True)
-        return Response(srz_data.data)
+        return Response(data=srz_data.data)
 
     def retrieve(self, request, pk=None):
         user = get_object_or_404(self.queryset, pk=pk)
