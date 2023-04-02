@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'accounts.apps.AccountsConfig',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -123,17 +124,17 @@ REST_FRAMEWORK = {
        'rest_framework_simplejwt.authentication.JWTAuthentication',
    ),
    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAdminUser'
+        'rest_framework.permissions.IsAdminUser',
    ),
    'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle'
+        'rest_framework.throttling.UserRateThrottle',
    ],
    'DEFAULT_THROTTLE_RATES': {
         'anon': '3/hour',
-        'user': '10/hour'
-   }
-
+        'user': '10/hour',
+   },
+   'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 

@@ -13,6 +13,7 @@ class HomeView(APIView):
 
 class QuestionView(APIView):
     permission_classes = [AllowOrReadonlyPermission, ]
+    serializer_class = QuestionSerializer
 
     def get(self, request):
         questions = Question.objects.all()
